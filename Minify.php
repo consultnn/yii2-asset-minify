@@ -15,32 +15,25 @@ class Minify
 {
     public static function js(AssetController $manager, $inputFiles, $outputFile)
     {
-//        var_dump($inputFiles);
-//        var_dump($outputFile);
         $tmpFile = $outputFile . '.tmp';
         $manager->combineJsFiles($inputFiles, $tmpFile);
         $content = file_get_contents($tmpFile);
         @unlink($tmpFile);
-        var_dump(\JSMin::minify($content));
-        exit;
-        echo shell_exec(strtr($manager->jsCompressor, [
-                    '{from}' => escapeshellarg($tmpFile),
-                    '{to}' => escapeshellarg($outputFile),
-                ]));
-
+        $content = ClosureCompiler::minify($content);
+        if (!file_put_contents($outputFile, $content)) {
+            throw new Exception("Unable to write output JavaScript file '{$outputFile}'.");
+        }
     }
 
     public static function css(AssetController $manager, $inputFiles, $outputFile)
     {
-        var_dump($inputFiles);
-        var_dump($outputFile);
-        exit;
         $tmpFile = $outputFile . '.tmp';
-        $manager->combineCssFiles($inputFiles, $tmpFile);
-        echo shell_exec(strtr($manager->cssCompressor, [
-                    '{from}' => escapeshellarg($tmpFile),
-                    '{to}' => escapeshellarg($outputFile),
-                ]));
+        $manager->combineJsFiles($inputFiles, $tmpFile);
+        $content = file_get_contents($tmpFile);
         @unlink($tmpFile);
+        $content = Css::minify($content);
+        if (!file_put_contents($outputFile, $content)) {
+            throw new Exception("Unable to write output Css file '{$outputFile}'.");
+        }
     }
 }

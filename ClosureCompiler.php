@@ -2,6 +2,8 @@
 
 namespace consultnn\minify;
 
+use yii\base\Exception;
+
 /**
  * Minify Javascript using Google's Closure Compiler API
  *
@@ -31,7 +33,7 @@ class ClosureCompiler
     /**
      * @var int The default maximum POST byte size according to https://developers.google.com/closure/compiler/docs/api-ref
      */
-    const DEFAULT_MAX_BYTES = 200000;
+    const DEFAULT_MAX_BYTES = 2000000;
 
     /**
      * @var string[] $DEFAULT_OPTIONS The default options to pass to the compiler service
@@ -104,7 +106,7 @@ class ClosureCompiler
      *
      * @param string $js JavaScript code
      * @return string
-     * @throws ClosureCompilerException
+     * @throws Exception
      */
     public function min($js)
     {
@@ -115,7 +117,7 @@ class ClosureCompiler
                 ? mb_strlen($postBody, '8bit')
                 : strlen($postBody);
             if ($bytes > $this->maxBytes) {
-                throw new ClosureCompilerException(
+                throw new Exception(
                     'POST content larger than ' . $this->maxBytes . ' bytes'
                 );
             }
@@ -124,12 +126,12 @@ class ClosureCompiler
         $response = $this->getResponse($postBody);
 
         if (preg_match('/^Error\(\d\d?\):/', $response)) {
-                throw new ClosureCompilerException($response);
+                throw new Exception($response);
         }
 
         if ($response === '') {
             $errors = $this->getResponse($this->buildPostBody($js, true));
-            throw new ClosureCompilerException($errors);
+            throw new Exception($errors);
         }
 
         return $response;
@@ -140,7 +142,7 @@ class ClosureCompiler
      *
      * @param string $postBody
      * @return string
-     * @throws ClosureCompilerException
+     * @throws Exception
      */
     protected function getResponse($postBody)
     {
@@ -170,13 +172,13 @@ class ClosureCompiler
             $contents = curl_exec($ch);
             curl_close($ch);
         } else {
-            throw new ClosureCompilerException(
+            throw new Exception(
                 "Could not make HTTP request: allow_url_open is false and cURL not available"
             );
         }
 
         if (false === $contents) {
-            throw new ClosureCompilerException(
+            throw new Exception(
                 "No HTTP response from server"
             );
         }
