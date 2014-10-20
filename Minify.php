@@ -9,6 +9,7 @@
 namespace consultnn\minify;
 
 
+use yii\base\Exception;
 use yii\console\controllers\AssetController;
 
 class Minify
@@ -31,7 +32,8 @@ class Minify
         $manager->combineJsFiles($inputFiles, $tmpFile);
         $content = file_get_contents($tmpFile);
         @unlink($tmpFile);
-        $content = Css::minify($content);
+        $compressor = new Css();
+        $content = $compressor->run($content);
         if (!file_put_contents($outputFile, $content)) {
             throw new Exception("Unable to write output Css file '{$outputFile}'.");
         }
