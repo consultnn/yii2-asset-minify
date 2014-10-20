@@ -1,5 +1,5 @@
 {
-	"name": "consultnn/api-client",
+	"name": "consultnn/yii2-asset-minify",
 	"description": "Minimizer for Yii2 assets",
 	"keywords": ["ConsultNN", "Yii2", "Assets"],
 	"license": "MIT",
