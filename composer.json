@@ -1,0 +1,35 @@
+{
+	"name": "consultnn/api-client",
+	"description": "Minimizer for Yii2 assets",
+	"keywords": ["ConsultNN", "Yii2", "Assets"],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "ICC Ltd.",
+			"email": "tech@consultnn.ru",
+			"homepage": "http://consultnn.ru"
+		},
+		{
+			"name": "Sergey Sipatov",
+			"email": "sipatov@consultnn.ru",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=5.4.0",
+		"ext-curl": "*"
+	},
+	"require-dev": {
+		"psr/log": "dev-master",
+		"phpunit/phpunit": "4.1.*",
+		"squizlabs/php_codesniffer": "1.*"
+	},
+    "autoload": {
+        "psr-4": {
+            "consultnn\\minify\\": "."
+        }
+    },
+	"support": {
+		"email": "tech@consultnn.ru"
+	}
+}
