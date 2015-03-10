@@ -42,7 +42,7 @@ class ClosureCompiler
      */
     private static $DEFAULT_OPTIONS = [
         'output_format' => 'text',
-        'compilation_level' => 'SIMPLE_OPTIMIZATIONS'
+        'compilation_level' => 'SIMPLE_OPTIMIZATIONS',
         'language' => 'ES5'
     ];
 
