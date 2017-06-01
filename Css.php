@@ -787,13 +787,13 @@ class Css
             switch (substr($size, -1)) {
                 case 'M':
                 case 'm':
-                    return $size * 1048576;
+                    return (int) $size * 1048576;
                 case 'K':
                 case 'k':
-                    return $size * 1024;
+                    return (int) $size * 1024;
                 case 'G':
                 case 'g':
-                    return $size * 1073741824;
+                    return (int) $size * 1073741824;
             }
         }
 
