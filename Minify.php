@@ -29,7 +29,7 @@ class Minify
     public static function css(AssetController $manager, $inputFiles, $outputFile)
     {
         $tmpFile = $outputFile . '.tmp';
-        $manager->combineJsFiles($inputFiles, $tmpFile);
+        $manager->combineCssFiles($inputFiles, $tmpFile);
         $content = file_get_contents($tmpFile);
         @unlink($tmpFile);
         $compressor = new Css();
